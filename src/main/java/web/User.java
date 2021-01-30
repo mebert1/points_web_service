@@ -7,6 +7,7 @@ public class User {
     private final int id;
     private int balance = 0;
     private List<Transaction> available_points = new LinkedList<>();
+
     private Map<String, Integer> payer_list = new HashMap<>();
 
     User(int id) {
@@ -27,30 +28,35 @@ public class User {
             Transaction oldest_points = findOldestPoints();
             // case 1: User needs all points from the transaction
             if (oldest_points.getPoints() <= amount_due) {
-                payment.addTransaction(oldest_points);
-                updateBalance(oldest_points.getPoints());
-                available_points.remove(oldest_points);
-                updatePayer_list(new Transaction(
+
+                Transaction required_points = new Transaction(
                         oldest_points.getPayer_name(),
                         oldest_points.getPoints() * (-1),
-                        oldest_points.getDate()));
+                        new Date());
+
+                payment.addTransaction(required_points);
+                updateBalance(required_points.getPoints());
+                available_points.remove(oldest_points);
+                updatePayer_list(required_points);
 
                 amount_due -= oldest_points.getPoints();
             } else {
                 // case 2: User does not need all points from the transaction -> split points to keep rest
                 Transaction required_points = new Transaction(
                         oldest_points.getPayer_name(),
-                        oldest_points.getPoints() - amount_due,
-                        oldest_points.getDate());
+                        (oldest_points.getPoints() - amount_due) * (-1),
+                        new Date());
                 Transaction unused_points = new Transaction(
                         oldest_points.getPayer_name(),
                         amount_due - oldest_points.getPoints(),
                         oldest_points.getDate());
 
                 payment.addTransaction(required_points);
-                updateBalance(oldest_points.getPoints());
+                updateBalance(required_points.getPoints());
                 available_points.remove(oldest_points);
                 available_points.add(unused_points);
+                updatePayer_list(required_points);
+
                 amount_due -= required_points.getPoints();
             }
         } while (amount_due > 0);
@@ -87,12 +93,12 @@ public class User {
 
     /* ----------------- Getters & Setters ----------------- */
 
-    public int getId() {
-        return id;
-    }
-
     public int getBalance() {
         return balance;
+    }
+
+    public Map<String, Integer> getPayer_list() {
+        return payer_list;
     }
 
 }

@@ -2,6 +2,7 @@ package web;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 public class UserService implements UserServiceInterface {
 
@@ -23,5 +24,9 @@ public class UserService implements UserServiceInterface {
 
     public Payment makePayment(int amount, int user_id) {
         return users.get(user_id).makePayment(amount);
+    }
+
+    public Map<String,Integer> getPayer_list(int user_id) {
+        return users.get(user_id).getPayer_list();
     }
 }

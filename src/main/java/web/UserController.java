@@ -2,7 +2,7 @@ package web;
 
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
+import java.util.Map;
 
 @RestController
 public class UserController implements UserServiceInterface {
@@ -17,6 +17,12 @@ public class UserController implements UserServiceInterface {
     @GetMapping("/balance")
     public int getBalance(@RequestParam(value = "user", required = true, defaultValue = "0") int user_id) {
         return user_service.getBalance(user_id);
+    }
+
+    // ppp = points per payer
+    @GetMapping("/ppp")
+    public Map<String,Integer> getPayer_list(@RequestParam(value = "user", required = true, defaultValue = "0") int user_id) {
+        return user_service.getPayer_list(user_id);
     }
 
     @PostMapping("/transaction")

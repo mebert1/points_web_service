@@ -1,9 +1,12 @@
 package web;
 
+import java.util.Map;
+
 public interface UserServiceInterface {
 
-    public boolean createUser ();
-    public int getBalance(int user_id);
-    public int processTransaction(Transaction transaction, int user_id);
-    public Payment makePayment(int amount, int user_id);
+    boolean createUser ();
+    int getBalance(int user_id);
+    int processTransaction(Transaction transaction, int user_id);
+    Payment makePayment(int amount, int user_id);
+    Map<String,Integer> getPayer_list(int user_id);
 }
