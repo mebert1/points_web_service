@@ -5,7 +5,7 @@ import java.util.List;
 
 public class UserService implements UserServiceInterface {
 
-    private List<User> users = new LinkedList<User>();
+    private List<User> users = new LinkedList<>();
 
     public boolean createUser () {
         return users.add(new User(users.size()));
@@ -17,7 +17,7 @@ public class UserService implements UserServiceInterface {
 
     public int processTransaction(Transaction transaction, int user_id) {
         User user = users.get(user_id);
-        user.addTransaction(transaction);
+        user.addPoints(transaction);
         return user.getBalance();
     }
 
