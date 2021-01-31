@@ -2,17 +2,21 @@
 
 
 
-This project is a web service for reward point management.
+This project implements a web service for point management. Points are tied to user accounts and associated to a company/partner.
 
 
 
-Developer: Marius Ebert
+**Developer**: Marius Ebert
 
-Language: Java
+**Language**: Java
 
-API: REST
+**API**: REST
 
-Framework: Spring
+**Framework**: Spring
+
+
+
+
 
 
 
@@ -31,9 +35,9 @@ This service uses HTTP GET and POST requests to perform the following actions.
 
 
 
+
+
 ## Build
-
-
 
 After cloning the project from this git repository with
 
@@ -57,13 +61,15 @@ During the build, the project will run automated tests that can be found in src/
 
 
 
+
+
 ## Example requests
 
 Use these example requests in your preferred REST API testing tool or simply in your browser's address bar.
 
 
 
-#### Create new User:
+### Create new User:
 
 **Type:** GET
 
@@ -71,7 +77,7 @@ Use these example requests in your preferred REST API testing tool or simply in 
 
 
 
-#### Request user point balance
+### Request user point balance
 
 **Type:** GET
 
@@ -79,7 +85,7 @@ Use these example requests in your preferred REST API testing tool or simply in 
 
 
 
-#### Request list of points per payer:
+### Request list of points per payer:
 
 **Type:** GET
 
@@ -87,7 +93,7 @@ Use these example requests in your preferred REST API testing tool or simply in 
 
 
 
-#### Add transaction
+### Add Transaction
 
 **Type:** POST
 
@@ -103,7 +109,7 @@ Use these example requests in your preferred REST API testing tool or simply in 
 
 
 
-#### Make payment
+### Make payment
 
 **Type:** GET
 
