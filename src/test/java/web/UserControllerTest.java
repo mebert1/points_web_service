@@ -19,8 +19,8 @@ class UserControllerTest {
 
     /* ----- Unit tests ----- */
 
-    Transaction trans1 = new Transaction("DANNON", 300, new Date());
-    Transaction trans2 = new Transaction("UNILEVER", 200, new Date());
+    Transaction trans1 = new Transaction("DANNON", 300, new Date(2021, 1, 10));
+    Transaction trans2 = new Transaction("UNILEVER", 200, new Date(2021, 1, 9));
 
     @Test
     void createUserTest() {
@@ -41,7 +41,7 @@ class UserControllerTest {
     void processTransactionTest() {
         UserController controller = new UserController();
         controller.createUser();
-        int result = controller.processTransaction(trans1, 0);
+        Integer result = controller.processTransaction(trans1, 0);
         assertEquals(result, 300);
         result = controller.processTransaction(trans2, 0);
         assertEquals(result, 500);
@@ -95,8 +95,6 @@ class UserControllerTest {
         assertEquals(result.getTransactions().get(1).getPayer_name(), payment.getTransactions().get(1).getPayer_name());
         assertEquals(result.getTransactions().get(0).getPoints(), payment.getTransactions().get(0).getPoints());
         assertEquals(result.getTransactions().get(1).getPoints(), payment.getTransactions().get(1).getPoints());
-        assertEquals(result.getTransactions().get(0).getDate().toString(), payment.getTransactions().get(0).getDate().toString());
-        assertEquals(result.getTransactions().get(1).getDate().toString(), payment.getTransactions().get(1).getDate().toString());
     }
 
     @Test
@@ -106,8 +104,7 @@ class UserControllerTest {
         assertTrue(controller.createUser());
 
         // Collect points
-        int balance;
-        balance = controller.processTransaction(trans1, 0);
+        Integer balance = controller.processTransaction(trans1, 0);
         assertEquals(balance, 300);
         balance = controller.processTransaction(trans2, 0);
         assertEquals(balance, 500);
@@ -132,8 +129,6 @@ class UserControllerTest {
         assertEquals(result.getTransactions().get(1).getPayer_name(), payment.getTransactions().get(1).getPayer_name());
         assertEquals(result.getTransactions().get(0).getPoints(), payment.getTransactions().get(0).getPoints());
         assertEquals(result.getTransactions().get(1).getPoints(), payment.getTransactions().get(1).getPoints());
-        assertEquals(result.getTransactions().get(0).getDate().toString(), payment.getTransactions().get(0).getDate().toString());
-        assertEquals(result.getTransactions().get(1).getDate().toString(), payment.getTransactions().get(1).getDate().toString());
         assertEquals(controller.getBalance(0), 0);
     }
 
