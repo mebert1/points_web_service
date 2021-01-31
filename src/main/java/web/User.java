@@ -24,7 +24,7 @@ public class User {
 
     public Payment makePayment(int amount_due) {
         Payment payment = new Payment();
-        do {
+        while (amount_due > 0) {
             Transaction oldest_points = findOldestPoints();
             // case 1: User needs all points from the transaction
             if (oldest_points.getPoints() <= amount_due) {
@@ -39,16 +39,16 @@ public class User {
                 available_points.remove(oldest_points);
                 updatePayer_list(required_points);
 
-                amount_due -= oldest_points.getPoints();
+                amount_due += required_points.getPoints();
             } else {
                 // case 2: User does not need all points from the transaction -> split points to keep rest
                 Transaction required_points = new Transaction(
                         oldest_points.getPayer_name(),
-                        (oldest_points.getPoints() - amount_due) * (-1),
+                        amount_due * (-1),
                         new Date());
                 Transaction unused_points = new Transaction(
                         oldest_points.getPayer_name(),
-                        amount_due - oldest_points.getPoints(),
+                        oldest_points.getPoints() - amount_due,
                         oldest_points.getDate());
 
                 payment.addTransaction(required_points);
@@ -57,9 +57,9 @@ public class User {
                 available_points.add(unused_points);
                 updatePayer_list(required_points);
 
-                amount_due -= required_points.getPoints();
+                amount_due += required_points.getPoints();
             }
-        } while (amount_due > 0);
+        }
         return payment;
     }
 
@@ -83,7 +83,7 @@ public class User {
     private Transaction findOldestPoints() {
         Transaction oldest = new Transaction("", 0, new Date());
         for(Transaction transaction : available_points) {
-            if(transaction.getDate().before(oldest.getDate())) {
+            if(oldest.getDate().before(transaction.getDate())) {
                 oldest = transaction;
             }
         }
